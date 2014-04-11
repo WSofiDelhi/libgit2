@@ -23,9 +23,7 @@ int git_attr_file__new(
 	git_attr_file *attrs = git__calloc(1, sizeof(git_attr_file));
 	GITERR_CHECK_ALLOC(attrs);
 
-	if (git_pool_init(&attrs->pool, 1, 0) < 0 ||
-		git_vector_init(&attrs->rules, 0, NULL) < 0)
-	{
+	if (git_pool_init(&attrs->pool, 1, 0) < 0) {
 		attr_file_free(attrs);
 		return -1;
 	}
@@ -483,7 +481,7 @@ int git_attr_fnmatch__parse(
 	{
 		/* use context path minus the trailing filename */
 		char *slash = strrchr(context, '/');
-		size_t contextlen = slash ? slash - context : 0;
+		size_t contextlen = slash ? slash - context + 1 : 0;
 
 		/* given an unrooted fullpath match from a file inside a repo,
 		 * prefix the pattern with the relative directory of the source file
